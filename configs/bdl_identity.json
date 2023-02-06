@@ -1,0 +1,26 @@
+{
+  "name": [["big_dense_long"]],
+  "agent": [{ "name": ["RNNIndentity"] }],
+  "epoch": [1000],
+  "seq_len": [5],
+  "datapath": ["./logs/bdl_collect/1/data.npz"],
+  "meta_net": [
+    {
+      "name": ["RobustRNN", "NormalRNN"],
+      "rnn_type": ["LSTM"],
+      "mlp_dims": [[16, 16]],
+      "hidden_size": [8]
+    }
+  ],
+  "optimizer": [
+    {
+      "name": ["Adam"],
+      "kwargs": [
+        { "learning_rate": [3e-3, 1e-3, 3e-4, 1e-4], "gradient_clip": [-1] }
+      ]
+    }
+  ],
+  "display_interval": [25],
+  "seed": [100],
+  "generate_random_seed": [true]
+}

@@ -1,0 +1,37 @@
+{
+  "env": [
+    {
+      "name": ["ur5e"],
+      "train_steps": [2e7],
+      "episode_length": [1000],
+      "action_repeat": [1],
+      "reward_scaling": [10],
+      "num_envs": [2048],
+      "num_evals": [20],
+      "normalize_obs": [true]
+    }
+  ],
+  "agent": [
+    {
+      "name": ["CollectPPO"],
+      "data_reduce": [100],
+      "gae_lambda": [0.95],
+      "rollout_steps": [5],
+      "num_minibatches": [32],
+      "clip_ratio": [0.3],
+      "update_epochs": [4],
+      "entropy_weight": [1e-2]
+    }
+  ],
+  "optimizer": [
+    {
+      "name": ["RMSProp", "Adam"],
+      "kwargs": [{ "learning_rate": [2e-4], "gradient_clip": [1] }]
+    }
+  ],
+  "batch_size": [1024],
+  "discount": [0.95],
+  "max_devices_per_host": [-1],
+  "seed": [1],
+  "generate_random_seed": [true]
+}

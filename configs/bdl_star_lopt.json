@@ -1,0 +1,38 @@
+{
+  "env": [
+    {
+      "name": [["big_dense_long"]],
+      "num_envs": [512],
+      "train_steps": [3e7]
+    }
+  ],
+  "agent": [
+    {
+      "name": ["A2C2"],
+      "gae_lambda": [0.95],
+      "rollout_steps": [20],
+      "critic_loss_weight": [0.5],
+      "entropy_weight": [0.01]
+    }
+  ],
+  "agent_optimizer": [
+    {
+      "name": ["Star"],
+      "kwargs": [
+        {
+          "train_steps": [3e7],
+          "param_load_path": [
+            "./logs/exp/index/meta_param_path1.pickle",
+            "./logs/exp/index/rnn_parameter_path2.pickle"
+          ],
+          "step_mult": [3e-3],
+          "nominal_stepsize": [3e-3],
+          "weight_decay": [0.0]
+        }
+      ]
+    }
+  ],
+  "discount": [0.995],
+  "seed": [42],
+  "generate_random_seed": [true]
+}
