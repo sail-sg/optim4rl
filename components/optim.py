@@ -110,7 +110,7 @@ class Optim4RL(nn.Module):
     o1 = self.mlp1(x1)
     # Add a small bias so that m_sign=1 initially
     m_sign_raw = jnp.tanh(o1[..., 0]+self.bias)
-    m_sign = lax.stop_gradient((m_sign_raw >= 0.0) - m_sign_raw) + m_sign_raw
+    m_sign = lax.stop_gradient(2.0*(m_sign_raw >= 0.0) - 1.0 - m_sign_raw) + m_sign_raw
     m = g_sign[..., 0] * m_sign * jnp.exp(o1[..., 1])
     # Compute v: 2nd pseudo moment estimate
     h2, x2 = self.rnn2(h2, 2.0*g_log)

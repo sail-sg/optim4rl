@@ -47,7 +47,11 @@ class RNNIndentity(object):
             cfg["optimizer"]["name"], cfg["optimizer"]["kwargs"], None
         )
         # Load data
-        self.batches = self.load_data(self.cfg["seq_len"], self.cfg["datapath"])
+        self.seed = random.PRNGKey(self.cfg["seed"])
+        if len(self.cfg["datapath"]) > 0:
+            self.batches = self.load_data(self.cfg["seq_len"], self.cfg["datapath"])
+        else:
+            self.batches = self.load_uniform_data(self.cfg["seq_len"])
 
     def create_meta_net(self):
         self.cfg["meta_net"]["mlp_dims"] = tuple(self.cfg["meta_net"]["mlp_dims"])
@@ -65,6 +69,25 @@ class RNNIndentity(object):
             start = i * seq_len
             x = xs[:, start : start + seq_len]
             batches.append([x, x])
+        batches = np.array(batches)
+        return jax.device_put(batches)
+
+    def load_uniform_data(self, seq_len):
+        self.batch_size, len, max_steps = 395, 3000, 500
+        self.num_batch = len // seq_len
+        # Generate random data in [-1,1]
+        xs = []
+        for i in range(len // max_steps):
+            seed, self.seed = random.split(self.seed)
+            x = random.uniform(seed, (self.batch_size, max_steps), minval=i-1, maxval=i+1)
+            xs.append(x)
+        xs = jnp.concatenate(xs, axis=-1)
+        self.logger.info(f"dataset size: {xs.shape}, batch_size: {self.batch_size}, num_batch: {self.num_batch}")
+        batches = [] # shape=(num_batch, batch_size, seq_len)
+        for i in range(self.num_batch):
+            start = i * seq_len
+            x = xs[:, start:start+seq_len]
+            batches.append([x,x])
         batches = np.array(batches)
         return jax.device_put(batches)
 
@@ -102,10 +125,10 @@ class RNNIndentity(object):
 
     def train(self):
         # Initialize model parameter
-        seed = random.PRNGKey(self.cfg["seed"])
+        model_seed, self.seed = random.split(self.seed)
         dummy_input = jnp.array([0.0])
         dummy_hidden_state = self.model.init_hidden_state(dummy_input)
-        param = self.model.init(seed, dummy_hidden_state, dummy_input)
+        param = self.model.init(model_seed, dummy_hidden_state, dummy_input)
 
         # Set optimizer state
         optim_state = self.optimizer.init(param)

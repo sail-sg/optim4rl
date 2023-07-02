@@ -1,7 +1,7 @@
 {
   "env": [
     {
-      "name": [["small_dense_long"]],
+      "name": [["small_dense_sparse"]],
       "num_envs": [512],
       "train_steps": [3e7]
     }
