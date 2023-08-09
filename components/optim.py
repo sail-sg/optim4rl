@@ -247,7 +247,10 @@ class OptimizerWrapper(object):
       self.optimizer = Optim4RL(**cfg)
       self.is_rnn_output = lambda x: type(x)==tuple and type(x[0])==tuple and type(x[1])!=tuple
     elif optimizer_name in ['LinearOptim', 'L2LGD2']:
-      self.optimizer = LinearOptim(**cfg)
+      if optimizer_name == 'LinearRNNOptimizer':
+        self.optimizer = LinearRNNOptimizer(**cfg)
+      elif optimizer_name == 'L2LGD2':
+        self.optimizer = L2LGD2(**cfg)
       self.is_rnn_output = lambda x: type(x)==tuple and type(x[0])!=tuple and type(x[1])!=tuple
     # Initialize param for RNN optimizer
     if len(self.param_load_path) > 0:
