@@ -1,4 +1,4 @@
-# Copyright 2022 Garena Online Private Limited.
+# Copyright 2024 Garena Online Private Limited.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,17 +13,20 @@
 # limitations under the License.
 
 import jax
+import distrax
 from jax import lax
-from jax import numpy as jnp
+import jax.numpy as jnp
 import flax.linen as nn
 from flax.linen.initializers import lecun_uniform
 
 from typing import Any, Callable, Sequence
+
+
 Initializer = Callable[..., Any]
 
 
 class MLP(nn.Module):
-  """Multilayer Perceptron"""
+  '''Multilayer Perceptron'''
   layer_dims: Sequence[int]
   hidden_act: str = 'ReLU'
   output_act: str = 'Linear'
@@ -63,13 +66,25 @@ D32 = nn.Sequential([
   nn.relu
 ])
 
-D64_64 = nn.Sequential([
+D256 = nn.Sequential([
   lambda x: x.reshape((x.shape[0], -1)), # flatten
-  nn.Dense(64),
-  nn.relu,
-  nn.Dense(64),
+  nn.Dense(256),
   nn.relu
 ])
+
+
+class MNIST_CNN(nn.Module):
+  output_dim: int = 10
+  
+  def setup(self):
+    self.feature_net = C16_D32
+    self.head = nn.Dense(self.output_dim)
+  
+  def __call__(self, obs):
+    phi = self.feature_net(obs)
+    logits = self.head(phi)
+    return logits
+
 
 def select_feature_net(env_name):
   # Select a feature net
@@ -79,8 +94,8 @@ def select_feature_net(env_name):
     return C16_D32
   elif env_name in ['random_walk']:
     return lambda x: x
-  elif env_name in ['Pendulum-v1', 'CartPole-v1', 'MountainCar-v0', 'MountainCarContinuous-v0', 'Acrobot-v1'] or 'bsuite' in env_name:
-    return D64_64
+  elif env_name in ['catch']:
+    return D256
 
 
 class ActorVCriticNet(nn.Module):
@@ -103,64 +118,3 @@ class ActorVCriticNet(nn.Module):
     v = self.critic_net(phi).squeeze()
     action_logits = self.actor_net(phi)
     return action_logits, v
-
-
-class RobustRNN(nn.Module):
-  name: str = 'RobustRNN'
-  rnn_type: str = 'GRU'
-  mlp_dims: Sequence[int] = ()
-  hidden_size: int = 8
-  out_size: int = 1
-  eps: float = 1e-18
-  
-  def setup(self):
-    # Set up RNN
-    if self.rnn_type == 'LSTM':
-      self.rnn = nn.OptimizedLSTMCell()
-    elif self.rnn_type == 'GRU':
-      self.rnn = nn.GRUCell()
-    # Set up MLP
-    layers = []
-    layer_dims = list(self.mlp_dims)
-    layer_dims.append(self.out_size)
-    for i in range(len(layer_dims)):      
-      layers.append(nn.Dense(layer_dims[i]))
-      layers.append(nn.relu)
-    layers.pop()
-    self.mlp = nn.Sequential(layers)
-
-  def __call__(self, h, g):
-    g_sign = jnp.sign(g)
-    g_log = jnp.log(jnp.abs(g) + self.eps)
-    g_sign = lax.stop_gradient(g_sign[..., None])
-    g_log = lax.stop_gradient(g_log[..., None])
-    g_input = jnp.concatenate([g_sign, g_log], axis=-1)
-    h, x = self.rnn(h, g_input)
-    outs = self.mlp(x)
-    out = g_sign[..., 0] * jnp.exp(outs[..., 0])
-    return h, out
-
-  def init_hidden_state(self, params):
-    # Use fixed random key since default state init fn is just zeros.
-    if self.rnn_type == 'LSTM':
-      h = nn.OptimizedLSTMCell.initialize_carry(jax.random.PRNGKey(0), params.shape, self.hidden_size)
-    elif self.rnn_type == 'GRU':
-      h = nn.GRUCell.initialize_carry(jax.random.PRNGKey(0), params.shape, self.hidden_size)
-    return h
-
-
-class NormalRNN(RobustRNN):
-  name: str = 'NormalRNN'
-  rnn_type: str = 'GRU'
-  mlp_dims: Sequence[int] = ()
-  hidden_size: int = 8
-  out_size: int = 1
-
-  def __call__(self, h, g):
-    # Expand parameter dimension so that the network is "coodinatewise"
-    g = lax.stop_gradient(g[..., None])
-    g_input = g
-    h, x = self.rnn(h, g_input)
-    outs = self.mlp(x)
-    out = outs[..., 0]
-    return h, out

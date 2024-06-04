@@ -1,0 +1,36 @@
+{
+  "env": [{
+    "name": [["catch"]],
+    "num_envs": [64],
+    "train_steps": [5e5]
+  }],
+  "agent": [{
+    "name": ["MetaA2Cstar"],
+    "inner_updates": [4],
+    "gae_lambda": [0.95],
+    "rollout_steps": [20],
+    "critic_loss_weight": [0.5],
+    "entropy_weight": [0.01],
+    "reset_interval": [32, 64]
+  }],
+  "agent_optim": [{
+    "name": ["Star"],
+    "kwargs": [{
+      "train_steps": [5e5],
+      "param_load_path": [""],
+      "learning_rate": [1e-3],
+      "grad_clip": [-1]
+    }]
+  }],
+  "meta_optim": [{
+    "name": ["Adam"],
+    "kwargs": [
+      {"learning_rate": [1e-4, 3e-4, 1e-3, 3e-3, 1e-2], "grad_norm": [0.5]},
+      {"learning_rate": [1e-4, 3e-4, 1e-3, 3e-3, 1e-2], "grad_clip": [1.0]}
+    ]
+  }],
+  "discount": [0.995],
+  "seed": [42],
+  "display_interval": [5],
+  "generate_random_seed": [true]
+}

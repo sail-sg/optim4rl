@@ -1,0 +1,66 @@
+{
+  "env": [{
+    "name": [["big_dense_long"]],
+    "num_envs": [512],
+    "train_steps": [3e7]
+  }],
+  "agent": [{
+    "name": ["A2C"],
+    "gae_lambda": [0.95],
+    "rollout_steps": [20],
+    "critic_loss_weight": [0.5],
+    "entropy_weight": [0.01]
+  }],
+  "agent_optim": [{
+    "name": ["LinearOptim"],
+    "kwargs": [{
+      "param_load_path": [
+        "./logs/meta_lin_bdl/1/param.pickle",
+        "./logs/meta_lin_bdl/2/param.pickle",
+        "./logs/meta_lin_bdl/3/param.pickle",
+        "./logs/meta_lin_bdl/4/param.pickle",
+        "./logs/meta_lin_bdl/5/param.pickle",
+        "./logs/meta_lin_bdl/6/param.pickle",
+        "./logs/meta_lin_bdl/7/param.pickle",
+        "./logs/meta_lin_bdl/8/param.pickle",
+        "./logs/meta_lin_bdl/9/param.pickle",
+        "./logs/meta_lin_bdl/10/param.pickle",
+        "./logs/meta_lin_bdl/11/param.pickle",
+        "./logs/meta_lin_bdl/12/param.pickle",
+        "./logs/meta_lin_bdl/13/param.pickle",
+        "./logs/meta_lin_bdl/14/param.pickle",
+        "./logs/meta_lin_bdl/15/param.pickle",
+        "./logs/meta_lin_bdl/16/param.pickle",
+        "./logs/meta_lin_bdl/17/param.pickle",
+        "./logs/meta_lin_bdl/18/param.pickle",
+        "./logs/meta_lin_bdl/19/param.pickle",
+        "./logs/meta_lin_bdl/20/param.pickle",
+        "./logs/meta_lin_bdl/21/param.pickle",
+        "./logs/meta_lin_bdl/22/param.pickle",
+        "./logs/meta_lin_bdl/23/param.pickle",
+        "./logs/meta_lin_bdl/24/param.pickle",
+        "./logs/meta_lin_bdl/25/param.pickle",
+        "./logs/meta_lin_bdl/26/param.pickle",
+        "./logs/meta_lin_bdl/27/param.pickle",
+        "./logs/meta_lin_bdl/28/param.pickle",
+        "./logs/meta_lin_bdl/29/param.pickle",
+        "./logs/meta_lin_bdl/30/param.pickle",
+        "./logs/meta_lin_bdl/31/param.pickle",
+        "./logs/meta_lin_bdl/32/param.pickle",
+        "./logs/meta_lin_bdl/33/param.pickle",
+        "./logs/meta_lin_bdl/34/param.pickle",
+        "./logs/meta_lin_bdl/35/param.pickle",
+        "./logs/meta_lin_bdl/36/param.pickle",
+        "./logs/meta_lin_bdl/37/param.pickle",
+        "./logs/meta_lin_bdl/38/param.pickle",
+        "./logs/meta_lin_bdl/39/param.pickle",
+        "./logs/meta_lin_bdl/40/param.pickle"
+      ],
+      "learning_rate": [0.003],
+      "grad_clip": [1]
+    }]
+  }],
+  "discount": [0.995],
+  "seed": [42],
+  "generate_random_seed": [true]
+}

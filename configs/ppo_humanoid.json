@@ -1,0 +1,30 @@
+{
+  "env": [{
+    "name": ["humanoid"],
+    "train_steps": [1e8],
+    "episode_length": [1000],
+    "action_repeat": [1],
+    "reward_scaling": [0.1],
+    "num_envs": [2048],
+    "num_evals": [10],
+    "normalize_obs": [true]
+  }],
+  "agent": [{
+    "name": ["PPO"],
+    "gae_lambda": [0.95],
+    "rollout_steps": [10],
+    "num_minibatches": [32],
+    "clipping_epsilon": [0.3],
+    "update_epochs": [8],
+    "entropy_weight": [1e-3]
+  }],
+  "optim": [{
+    "name": ["RMSProp", "Adam"],
+    "kwargs": [{"learning_rate": [3e-4], "grad_clip": [1]}]
+  }],
+  "batch_size": [1024],
+  "discount": [0.97],
+  "max_devices_per_host": [-1],
+  "seed": [1],
+  "generate_random_seed": [true]
+}

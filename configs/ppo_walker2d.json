@@ -1,0 +1,30 @@
+{
+  "env": [{
+    "name": ["walker2d"],
+    "train_steps": [5e7],
+    "episode_length": [1000],
+    "action_repeat": [1],
+    "reward_scaling": [5],
+    "num_envs": [2048],
+    "num_evals": [20],
+    "normalize_obs": [true]
+  }],
+  "agent": [{
+    "name": ["PPO"],
+    "gae_lambda": [0.95],
+    "rollout_steps": [20],
+    "num_minibatches": [32],
+    "clipping_epsilon": [0.3],
+    "update_epochs": [8],
+    "entropy_weight": [1e-3]
+  }],
+  "optim": [{
+    "name": ["RMSProp", "Adam"],
+    "kwargs": [{"learning_rate": [3e-5], "grad_clip": [1]}]
+  }],
+  "batch_size": [512],
+  "discount": [0.997],
+  "max_devices_per_host": [-1],
+  "seed": [1],
+  "generate_random_seed": [true]
+}

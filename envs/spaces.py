@@ -1,4 +1,4 @@
-# Copyright 2022 Garena Online Private Limited.
+# Copyright 2024 Garena Online Private Limited.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,9 +17,9 @@ import jax.numpy as jnp
 
 
 class Discrete(object):
-  """
+  '''
   Minimal jittable class for discrete gymnax spaces.
-  """
+  '''
   def __init__(self, n):
     assert n >= 0
     self.n = n

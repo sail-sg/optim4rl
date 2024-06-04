@@ -1,4 +1,4 @@
-# Copyright 2022 Garena Online Private Limited.
+# Copyright 2024 Garena Online Private Limited.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,9 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+import sys
 import copy
-import json
 import time
+import json
 import numpy as np
 
 import agents
@@ -22,22 +24,23 @@ from utils.helper import set_random_seed, rss_memory_usage
 
 
 class Experiment(object):
-  """
+  '''
   Train the agent to play the game.
-  """
+  '''
   def __init__(self, cfg):
     self.cfg = copy.deepcopy(cfg)
     self.config_idx = cfg['config_idx']
     self.agent_name = cfg['agent']['name']
     if self.cfg['generate_random_seed']:
       self.cfg['seed'] = np.random.randint(int(1e6))
+    self.model_path = self.cfg['model_path']
     self.cfg_path = self.cfg['cfg_path']
     self.save_config()
 
   def run(self):
-    """
+    '''
     Run the game for multiple steps
-    """
+    '''
     self.start_time = time.time()
     set_random_seed(self.cfg['seed'])
     self.agent = getattr(agents, self.agent_name)(self.cfg)

@@ -1,4 +1,4 @@
-# Copyright 2022 Garena Online Private Limited.
+# Copyright 2024 Garena Online Private Limited.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,15 +13,17 @@
 # limitations under the License.
 
 from .BaseAgent import BaseAgent
+from .SLCollect import SLCollect
+
+from .A2C import A2C
+from .A2Cstar import A2Cstar
+from .A2Ccollect import A2Ccollect
+from .MetaA2C import MetaA2C
+from .MetapA2C import MetapA2C
+from .MetaA2Cstar import MetaA2Cstar
 
 from .PPO import PPO
-from .A2C import A2C
-from .A2C2 import A2C2
-from .RNNIndentity import RNNIndentity
-
-from .CollectPPO import CollectPPO
-from .CollectA2C import CollectA2C
-
+from .PPOstar import PPOstar
 from .MetaPPO import MetaPPO
-from .MetaA2C import MetaA2C
-from .StarA2C import StarA2C
+from .MetapPPO import MetapPPO
+from .MetaPPOstar import MetaPPOstar

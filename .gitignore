@@ -7,9 +7,7 @@ logfile
 *output*
 *DS_Store*
 *todo*
-run*.sh
-script.sh
-.trunk
+data
 
 ### Python ###
 # Byte-compiled / optimized / DLL files

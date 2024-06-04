@@ -1,4 +1,4 @@
-# Copyright 2022 Garena Online Private Limited.
+# Copyright 2024 Garena Online Private Limited.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,19 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import jax
-import pickle
 import numpy as np
-import jax.numpy as jnp
 from copy import deepcopy
-from jax import lax, random, tree_util
+
+import jax
+from jax import random
 
 from utils.logger import Logger
 from envs.utils import make_env
 from envs.spaces import Box, Discrete
-
-from gymnax.environments.spaces import Box as gymnax_Box
-from gymnax.environments.spaces import Discrete as gymnax_Discrete
 
 
 class BaseAgent(object):
@@ -42,12 +38,12 @@ class BaseAgent(object):
     del cfg['env']['name']
     # Make envs
     self.envs = []
-    for i in range(len(self.env_names)):
-      env_name = self.env_names[i]
+    self.task_num = len(self.env_names)
+    for i in range(self.task_num):
       env_cfg = deepcopy(cfg['env'])
       if 'reward_scaling' in env_cfg.keys() and isinstance(env_cfg['reward_scaling'], list):
         env_cfg['reward_scaling'] = env_cfg['reward_scaling'][i]
-      self.envs.append(make_env(env_name, env_cfg))
+      self.envs.append(make_env(self.env_names[i], env_cfg))
     # Get action_types, action_sizes, and state_sizes
     self.get_env_info()
     # Create agent networks
@@ -78,33 +74,16 @@ class BaseAgent(object):
     self.action_types, self.action_sizes, self.state_sizes = [], [], []
     for env in self.envs:
       # Get state info
-      if isinstance(env.observation_space, Discrete) or isinstance(env.observation_space, gymnax_Discrete):
-        self.state_sizes.append(env.observation_space.n)
+      if isinstance(env.obs_space, Discrete):
+        self.state_sizes.append(env.obs_space.n)
       else: # Box, MultiBinary
-        self.state_sizes.append(int(np.prod(env.observation_space.shape)))
+        self.state_sizes.append(int(np.prod(env.obs_space.shape)))
       # Get action info
-      if isinstance(env.action_space, Discrete) or isinstance(env.action_space, gymnax_Discrete):
+      if isinstance(env.action_space, Discrete):
         self.action_types.append('DISCRETE')
         self.action_sizes.append(env.action_space.n)
-      elif isinstance(env.action_space, Box) or isinstance(env.action_space, gymnax_Box):
+      elif isinstance(env.action_space, Box):
         self.action_types.append('CONTINUOUS')
         self.action_sizes.append(env.action_space.shape[0])
       else:
         raise ValueError('Unknown action type.')
-
-  def pytree2array(self, values):
-    leaves = tree_util.tree_leaves(lax.stop_gradient(values))
-    a = jnp.concatenate(leaves, axis=None)
-    return a
-    
-  def save_model_param(self, model_param, filepath):
-    f = open(filepath, 'wb')
-    pickle.dump(model_param, f)
-    f.close()
-
-  def load_model_param(self, filepath):
-    f = open(filepath, 'rb')
-    model_param = pickle.load(f)
-    model_param = tree_util.tree_map(jnp.array, model_param)
-    f.close()
-    return model_param

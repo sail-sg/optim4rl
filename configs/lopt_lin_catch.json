@@ -1,0 +1,46 @@
+{
+  "env": [{
+    "name": [["catch"]],
+    "num_envs": [64],
+    "train_steps": [5e5]
+  }],
+  "agent": [{
+    "name": ["A2C"],
+    "gae_lambda": [0.95],
+    "rollout_steps": [20],
+    "critic_loss_weight": [0.5],
+    "entropy_weight": [0.01]
+  }],
+  "agent_optim": [{
+    "name": ["LinearOptim"],
+    "kwargs": [{
+      "param_load_path": [
+        "./logs/meta_lin_catch/1/param.pickle",
+        "./logs/meta_lin_catch/2/param.pickle",
+        "./logs/meta_lin_catch/3/param.pickle",
+        "./logs/meta_lin_catch/4/param.pickle",
+        "./logs/meta_lin_catch/5/param.pickle",
+        "./logs/meta_lin_catch/6/param.pickle",
+        "./logs/meta_lin_catch/7/param.pickle",
+        "./logs/meta_lin_catch/8/param.pickle",
+        "./logs/meta_lin_catch/9/param.pickle",
+        "./logs/meta_lin_catch/10/param.pickle",
+        "./logs/meta_lin_catch/11/param.pickle",
+        "./logs/meta_lin_catch/12/param.pickle",
+        "./logs/meta_lin_catch/13/param.pickle",
+        "./logs/meta_lin_catch/14/param.pickle",
+        "./logs/meta_lin_catch/15/param.pickle",
+        "./logs/meta_lin_catch/16/param.pickle",
+        "./logs/meta_lin_catch/17/param.pickle",
+        "./logs/meta_lin_catch/18/param.pickle",
+        "./logs/meta_lin_catch/19/param.pickle",
+        "./logs/meta_lin_catch/20/param.pickle"
+      ],
+      "learning_rate": [1e-3],
+      "grad_clip": [-1]
+    }]
+  }],
+  "discount": [0.995],
+  "seed": [42],
+  "generate_random_seed": [true]
+}

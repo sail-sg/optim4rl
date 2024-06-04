@@ -1,0 +1,21 @@
+{
+  "env": [{
+    "name": [["catch"]],
+    "num_envs": [64],
+    "train_steps": [5e5]
+  }],
+  "agent": [{
+    "name": ["A2C"],
+    "gae_lambda": [0.95],
+    "rollout_steps": [20],
+    "critic_loss_weight": [0.5],
+    "entropy_weight": [0.01]
+  }],
+  "agent_optim": [{
+    "name": ["RMSProp", "Adam"],
+    "kwargs": [{"learning_rate": [1e-3], "grad_clip": [-1]}]
+    }],
+  "discount": [0.995],
+  "seed": [42],
+  "generate_random_seed": [true]
+}

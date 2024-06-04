@@ -1,4 +1,4 @@
-# Copyright 2022 Garena Online Private Limited.
+# Copyright 2024 Garena Online Private Limited.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,22 +19,10 @@ from experiment import Experiment
 from utils.helper import make_dir
 from utils.sweeper import Sweeper
 
-# from jax.config import config
-# config.update('jax_disable_jit', True)
-# config.update("jax_debug_nans", True)
-# config.update("jax_enable_x64", True)
-# config.update('jax_default_matmul_precision', jax.lax.Precision.HIGHEST)
-# Set a specific platform
-# config.update('jax_platform_name', 'cpu')
-
-# Fake devices
-# import os
-# os.environ['XLA_FLAGS'] = '--xla_force_host_platform_device_count=2'
-
 
 def main(argv):
   parser = argparse.ArgumentParser(description="Config file")
-  parser.add_argument('--config_file', type=str, default='./configs/sds_a2c.json', help='Configuration file')
+  parser.add_argument('--config_file', type=str, default='./configs/catch.json', help='Configuration file')
   parser.add_argument('--config_idx', type=int, default=1, help='Configuration index')
   args = parser.parse_args()
   
@@ -49,6 +37,7 @@ def main(argv):
   cfg['exp'] = args.config_file.split('/')[-1].split('.')[0]
   cfg['logs_dir'] = f"./logs/{cfg['exp']}/{cfg['config_idx']}/"
   make_dir(f"./logs/{cfg['exp']}/{cfg['config_idx']}/")
+  cfg['model_path'] = cfg['logs_dir'] + 'model.pt'
   cfg['cfg_path'] = cfg['logs_dir'] + 'config.json'
 
   exp = Experiment(cfg)

@@ -1,0 +1,17 @@
+{
+  "task": ["MNIST"],
+  "agent": [{
+    "name": ["SLCollect"],
+    "data_reduce": [1000]
+  }],
+  "model": [{"name": ["MNIST_CNN"], "kwargs": [{"output_dim": [10]}]}],
+  "optimizer": [{
+    "name": ["RMSProp"],
+    "kwargs": [{"learning_rate": [3e-4], "grad_clip": [-1]}]
+  }],
+  "epochs": [10],
+  "batch_size": [128],
+  "display_interval": [1],
+  "seed": [1],
+  "generate_random_seed": [false]
+}

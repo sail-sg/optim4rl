@@ -1,18 +1,4 @@
-# Copyright 2022 Garena Online Private Limited.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-# Copyright 2022 The Brax Authors.
+# Copyright 2023 The Brax Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -28,9 +14,10 @@
 
 """Brax training gradient utility functions."""
 
+from typing import Callable, Optional
+
 import jax
 import optax
-from typing import Callable, Optional
 
 
 def loss_and_pgrad(loss_fn: Callable[..., float],
@@ -70,7 +57,7 @@ def gradient_update_fn(loss_fn: Callable[..., float],
     value, grads = loss_and_pgrad_fn(*args)
     params_update, optimizer_state = optimizer.update(grads, optimizer_state)
     params = optax.apply_updates(args[0], params_update)
-    return value, params, optimizer_state, grads, params_update
+    return value, params, optimizer_state, grads
 
   return f
 

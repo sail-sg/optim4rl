@@ -1,0 +1,66 @@
+{
+  "env": [{
+    "name": [["small_dense_long"]],
+    "num_envs": [512],
+    "train_steps": [3e7]
+  }],
+  "agent": [{
+    "name": ["A2C"],
+    "gae_lambda": [0.95],
+    "rollout_steps": [20],
+    "critic_loss_weight": [0.5],
+    "entropy_weight": [0.01]
+  }],
+  "agent_optim": [{
+    "name": ["Optim4RL"],
+    "kwargs": [{
+      "param_load_path": [
+        "./logs/meta_rl_sdl/1/param.pickle",
+        "./logs/meta_rl_sdl/2/param.pickle",
+        "./logs/meta_rl_sdl/3/param.pickle",
+        "./logs/meta_rl_sdl/4/param.pickle",
+        "./logs/meta_rl_sdl/5/param.pickle",
+        "./logs/meta_rl_sdl/6/param.pickle",
+        "./logs/meta_rl_sdl/7/param.pickle",
+        "./logs/meta_rl_sdl/8/param.pickle",
+        "./logs/meta_rl_sdl/9/param.pickle",
+        "./logs/meta_rl_sdl/10/param.pickle",
+        "./logs/meta_rl_sdl/11/param.pickle",
+        "./logs/meta_rl_sdl/12/param.pickle",
+        "./logs/meta_rl_sdl/13/param.pickle",
+        "./logs/meta_rl_sdl/14/param.pickle",
+        "./logs/meta_rl_sdl/15/param.pickle",
+        "./logs/meta_rl_sdl/16/param.pickle",
+        "./logs/meta_rl_sdl/17/param.pickle",
+        "./logs/meta_rl_sdl/18/param.pickle",
+        "./logs/meta_rl_sdl/19/param.pickle",
+        "./logs/meta_rl_sdl/20/param.pickle",
+        "./logs/meta_rl_sdl/21/param.pickle",
+        "./logs/meta_rl_sdl/22/param.pickle",
+        "./logs/meta_rl_sdl/23/param.pickle",
+        "./logs/meta_rl_sdl/24/param.pickle",
+        "./logs/meta_rl_sdl/25/param.pickle",
+        "./logs/meta_rl_sdl/26/param.pickle",
+        "./logs/meta_rl_sdl/27/param.pickle",
+        "./logs/meta_rl_sdl/28/param.pickle",
+        "./logs/meta_rl_sdl/29/param.pickle",
+        "./logs/meta_rl_sdl/30/param.pickle",
+        "./logs/meta_rl_sdl/31/param.pickle",
+        "./logs/meta_rl_sdl/32/param.pickle",
+        "./logs/meta_rl_sdl/33/param.pickle",
+        "./logs/meta_rl_sdl/34/param.pickle",
+        "./logs/meta_rl_sdl/35/param.pickle",
+        "./logs/meta_rl_sdl/36/param.pickle",
+        "./logs/meta_rl_sdl/37/param.pickle",
+        "./logs/meta_rl_sdl/38/param.pickle",
+        "./logs/meta_rl_sdl/39/param.pickle",
+        "./logs/meta_rl_sdl/40/param.pickle"
+      ],
+      "learning_rate": [0.03],
+      "grad_clip": [1]
+    }]
+  }],
+  "discount": [0.995],
+  "seed": [42],
+  "generate_random_seed": [true]
+}
