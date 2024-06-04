@@ -5,7 +5,7 @@ optax==0.1.7
 flax==0.7.5
 rlax==0.1.6
 brax==0.9.4
-tensorflow==2.8.4
+tensorflow>=2.11.1
 matplotlib
 psutil
 pandas
