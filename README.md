@@ -5,15 +5,16 @@ This is the official implementation of *Optim4RL*, a learning to optimize framew
 
 **Table of Contents**
 
-- [Installation](#installation)
-- [Usage](#usage)
-  - [Hyperparameter](#hyperparameter)
-  - [Experiment](#experiment)
-  - [Analysis](#analysis)
-- [Citation](#citation)
-- [License](#license)
-- [Acknowledgement](#acknowledgement)
-- [Disclaimer](#disclaimer)
+- [Optim4RL](#optim4rl)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Hyperparameter](#hyperparameter)
+    - [Experiment](#experiment)
+    - [Analysis](#analysis)
+  - [Citation](#citation)
+  - [License](#license)
+  - [Acknowledgement](#acknowledgement)
+  - [Disclaimer](#disclaimer)
 
 
 ## Installation
@@ -120,12 +121,13 @@ Inside `analysis_*.py`, `unfinished_index` will print out the configuration inde
 If you find this work useful to your research, please cite our paper.
 
 ```bibtex
-@inproceedings{lan2024learning,
+@article{lan2024learning,
   title={Learning to Optimize for Reinforcement Learning},
-  author={Lan, Qingfeng and Mahmood, A. Rupam and Yan, Shuicheng and Xu, Zhongwen},
-  booktitle={Reinforcement Learning Conference},
-  year={2024},
-  url={https://openreview.net/forum?id=JQuEXGj2r1}
+  author={Lan, Qingfeng and Mahmood, A. Rupam and YAN, Shuicheng and Xu, Zhongwen},
+  journal={Reinforcement Learning Journal},
+  volume={1},
+  issue={1},
+  year={2024}
 }
 ```
 
