@@ -5,16 +5,15 @@ This is the official implementation of *Optim4RL*, a learning to optimize framew
 
 **Table of Contents**
 
-- [Optim4RL](#optim4rl)
-  - [Installation](#installation)
-  - [Usage](#usage)
-    - [Hyperparameter](#hyperparameter)
-    - [Experiment](#experiment)
-    - [Analysis](#analysis)
-  - [Citation](#citation)
-  - [License](#license)
-  - [Acknowledgement](#acknowledgement)
-  - [Disclaimer](#disclaimer)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Hyperparameter](#hyperparameter)
+  - [Experiment](#experiment)
+  - [Analysis](#analysis)
+- [Citation](#citation)
+- [License](#license)
+- [Acknowledgement](#acknowledgement)
+- [Disclaimer](#disclaimer)
 
 
 ## Installation
